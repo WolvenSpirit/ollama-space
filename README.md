@@ -31,3 +31,34 @@ ollama pull qwen2.5-coder:7b
 }
 ```
 
+Devcontainer 
+```
+{
+  "name": "llm",
+  "image": "mcr.microsoft.com/devcontainers/go:1-1.22-bookworm",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "golang.Go",
+        "continue.continue"
+      ]
+    }
+  },
+  "postCreateCommand": "curl -fsSL https://ollama.com/install.sh | sh && OLLAMA_HOST=0.0.0.0 ollama serve > ollama.log 2>&1 &",
+  "forwardPorts": [
+    11434,
+    8080
+  ],
+  "portsAttributes": {
+    "11434": {
+      "label": "Ollama API",
+      "visibility": "public"
+    },
+    "8080": {
+      "label": "Go Web Server",
+      "onAutoForward": "openPreview"
+    }
+  }
+}
+
+```
